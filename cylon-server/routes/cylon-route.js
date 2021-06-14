@@ -2,6 +2,7 @@ const express = require('express');
 const Cylon = require('cylon');
 const router = express.Router();
 const LEDRobot = require('../robots/led-robot');
+const OpenRobot = require('../robots/open-robot');
 
 router.post('/setLedRobotConfiguration', (req, res) => {
   // Initialize the LED Robot
