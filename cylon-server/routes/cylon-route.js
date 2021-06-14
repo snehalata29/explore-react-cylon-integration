@@ -21,4 +21,11 @@ router.get('/stopLED', function (req, res, next) {
   res.send('LED Stopped');
 });
 
+router.get('/setopencvRobotConfiguration', (req, res) => {
+  // Initialize and start webcam
+  console.log('setopencvRobotConfiguration');
+  OpenRobot.setOpenCvRobotConfiguration();
+  res.send('setopencvRobotConfiguration!');
+});
+
 module.exports = router;
