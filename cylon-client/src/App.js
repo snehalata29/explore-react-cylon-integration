@@ -34,6 +34,11 @@ function App() {
       .then((res) => res.text())
       .then((res) => setApiResponse(res));
   };
+  const setopencvRobotConfiguration = () => {
+    fetch('http://localhost:9000/cylonRoute/setopencvRobotConfiguration')
+      .then((res) => res.text())
+      .then((res) => setApiResponse(res));
+  };
   return (
     <div className='App'>
       <Button variant='primary' onClick={setLEDConfiguration}>
@@ -44,6 +49,9 @@ function App() {
       </Button>
       <Button variant='danger' onClick={stopLED}>
         Stop the LED
+      </Button>
+      <Button variant='primary' onClick={startopencv}>
+        Start the opencv
       </Button>
       <p className='App-intro'>{apiResponse}</p>
     </div>
