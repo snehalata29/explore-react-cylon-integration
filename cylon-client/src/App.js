@@ -39,6 +39,72 @@ function App() {
       .then((res) => res.text())
       .then((res) => setApiResponse(res));
   };
+  const startopencv = () => {
+    fetch('http://localhost:9000/cylonRoute/startopencv')
+      .then((res) => res.text())
+      .then((res) => setApiResponse(res));
+  };
+
+  
+  var recordedChunks=[];
+  var isRecording = false;
+
+   function handleDataAvailable(event) {
+      if (event.data.size > 0) {
+        recordedChunks.push(event.data);
+        isRecording = false
+        download();
+      } else {
+        // ...
+      }
+    }
+  function download(){
+      var blob = new Blob(recordedChunks, {
+      type: "video/mov"
+    });
+  
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    var d = new Date();
+    var n = d.toUTCString();
+    a.download = n+".mov";
+    a.click();
+    window.URL.revokeObjectURL(url);
+    recordedChunks = []
+    //this.showNotification()
+    }
+  
+
+  async function getStream() {
+    const displayOptions= 
+    {
+      video: {
+        cursor: "always"
+      },
+      audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        }
+      }
+    const options= { mimeType: "video/webm; codecs=vp9" }
+    var isRecording;
+      try {
+  
+          const stream =  await navigator.mediaDevices.getDisplayMedia(displayOptions);
+          const mediaRecorder = new MediaRecorder(stream, options);
+          mediaRecorder.ondataavailable = handleDataAvailable;
+          mediaRecorder.start();
+          isRecording = true
+        } catch(err) {
+          isRecording = false
+          alert(err);
+        }
+  }
+
   return (
     <div className='App'>
       <Button variant='primary' onClick={setLEDConfiguration}>
@@ -50,8 +116,16 @@ function App() {
       <Button variant='danger' onClick={stopLED}>
         Stop the LED
       </Button>
+      <Button variant='primary' onClick={setopencvRobotConfiguration}>
+        Configure opencv
+      </Button>
+
       <Button variant='primary' onClick={startopencv}>
         Start the opencv
+      </Button>
+
+      <Button variant='primary' onClick={getStream}>
+        Start recording
       </Button>
       <p className='App-intro'>{apiResponse}</p>
     </div>
