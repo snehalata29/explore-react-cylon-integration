@@ -107,24 +107,10 @@ function App() {
 
   return (
     <div className='App'>
-      <Button variant='primary' onClick={setLEDConfiguration}>
-        Configure LED
-      </Button>
-      <Button variant='success' onClick={startLED}>
-        Start the LED
-      </Button>
-      <Button variant='danger' onClick={stopLED}>
-        Stop the LED
-      </Button>
       <Button variant='primary' onClick={setopencvRobotConfiguration}>
         Configure opencv
       </Button>
-
-      <Button variant='primary' onClick={startopencv}>
-        Start the opencv
-      </Button>
-
-      <Button variant='primary' onClick={getStream}>
+      <Button variant='success' onClick={getStream}>
         Start recording
       </Button>
       <p className='App-intro'>{apiResponse}</p>
