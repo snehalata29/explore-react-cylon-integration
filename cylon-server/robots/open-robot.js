@@ -46,10 +46,6 @@ class OpenRobot {
           //console.log("FRAMEREADY!");
 
           console.log("frameready!");
-
-          console.log(im.read());
-
-          console.log("frameready!");
           frameSelf.robot.devices.window.show(im, 400);
         });
   

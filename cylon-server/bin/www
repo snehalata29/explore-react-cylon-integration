@@ -20,6 +20,28 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server,{
+  cors: {
+    origin: '*',
+  }
+});
+
+io.on("connection", socket => {
+  console.log("New client connected"), setInterval(
+    () => getApiAndEmit(socket),
+    10000
+  );
+  socket.on("disconnect", () => console.log("Client disconnected"));
+})
+
+const getApiAndEmit = async socket => {
+  try {
+    
+    socket.emit("FromAPI", "I am sending dara"+Math.random());
+  } catch (error) {
+    console.error(`Error: ${error.code}`);
+  }
+};
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Button } from 'react-bootstrap';
+import socketIOClient from 'socket.io-client';
 import './App.css';
-
+ const ENDPOINT = "http://127.0.0.1:9000"
+ 
 function App() {
+  // var socket = socketClient (SERVER);
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("FromAPI", data => console.log(data));
+  }, []);
+  
   const [apiResponse, setApiResponse] = useState('');
   const setLEDConfiguration = () => {
     fetch('http://localhost:9000/cylonRoute/setLedRobotConfiguration', {
@@ -45,7 +53,7 @@ function App() {
       .then((res) => setApiResponse(res));
   };
 
-  
+
   var recordedChunks=[];
   var isRecording = false;
 
@@ -107,6 +115,7 @@ function App() {
 
   return (
     <div className='App'>
+      
       <Button variant='primary' onClick={setopencvRobotConfiguration}>
         Configure opencv
       </Button>
