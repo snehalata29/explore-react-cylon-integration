@@ -18,6 +18,6 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.7",
-    "cyclon-opencv": "0.15.0"
+    "cylon-opencv": "0.15.0"
   }
 }
