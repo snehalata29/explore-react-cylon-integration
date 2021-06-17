@@ -6,7 +6,9 @@ const cylonOpencv = require('cylon-opencv');
 class OpenRobot {
   constructor() {
     this.robot = null;
+    this.im = null;
   }
+
   setOpenCvRobotConfiguration() {
     this.robot = cylon
       .robot({
@@ -18,9 +20,8 @@ class OpenRobot {
             window: { driver: 'window' },
             camera: {
               driver: 'camera',
-              camera: 0,
-              haarcascade: '/Users/anoop.sharma/Desktop/Web applications/cylon/new-app/explore-react-cylon-integration/cylon-server/node_modules/cylon-opencv/examples/display_camera/haarcascade_frontalface_alt.xml'
-            }
+              camera: 0, 
+              haarcascade: '/Users/snehalata.pimprale/Documents/cylonjs/code-hoot/explore-react-cylon-integration/cylon-server/node_modules/cylon-opencv/examples/display_camera/haarcascade_frontalface_alt.xml'      }
           },
       })
       .start();
@@ -40,14 +41,19 @@ class OpenRobot {
         var frameSelf = self;
         //console.log('started opencv')
         self.robot.devices.camera.on('frameReady', function(err, im) {
-
+          
           //console.log("FRAMEREADY!");
           //console.log(frameSelf.robot.devices.window)
           //console.log("FRAMEREADY!");
 
           console.log("frameready!");
-          frameSelf.robot.devices.window.show(im, 400);
+          const data = frameSelf.robot.devices.window.show(im, 400);
+          self.im = im;
+          console.log(im, typeof(im), JSON.stringify(im))
+
+          //this.sendDataToSocket(im)
         });
+        
   
         // Here we have two options to start reading frames from
         // the camera feed.
@@ -65,10 +71,13 @@ class OpenRobot {
         //
         //every(50, function() { frameSelf.robot.devices.camera.readFrame(); });
 
-        setInterval(function() { frameSelf.robot.devices.camera.readFrame(); }, 5000);
+        setInterval(function() { 
+          const data =frameSelf.robot.devices.camera.readFrame(); 
+        }
+          , 5000);
       });
+     
   }
-  
 }
 
 module.exports = new OpenRobot();

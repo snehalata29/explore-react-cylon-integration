@@ -8,7 +8,7 @@ function App() {
   // var socket = socketClient (SERVER);
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => console.log(data));
+    socket.on("FromAPI", data => console.log("data recieved ",data));
   }, []);
   
   const [apiResponse, setApiResponse] = useState('');
@@ -112,7 +112,6 @@ function App() {
           alert(err);
         }
   }
-
   return (
     <div className='App'>
       
