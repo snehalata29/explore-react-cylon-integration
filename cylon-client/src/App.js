@@ -6,12 +6,17 @@ import './App.css';
  
 function App() {
   // var socket = socketClient (SERVER);
+  const [apiResponse, setApiResponse] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => console.log("data recieved ",data));
+    socket.on("frame", (data) => {
+      console.log(data)
+      const url = `data:image/jpeg;base64,${data}`
+      setImageUrl(url);
+    });
   }, []);
   
-  const [apiResponse, setApiResponse] = useState('');
   const setLEDConfiguration = () => {
     fetch('http://localhost:9000/cylonRoute/setLedRobotConfiguration', {
       method: 'POST',
@@ -114,13 +119,15 @@ function App() {
   }
   return (
     <div className='App'>
-      
-      <Button variant='primary' onClick={setopencvRobotConfiguration}>
-        Configure opencv
-      </Button>
-      <Button variant='success' onClick={getStream}>
-        Start recording
-      </Button>
+      <div className="m-t"><img id="videoImage" src={imageUrl} width="300px" height="300px"/></div>
+      <div className="m-t">
+        <Button variant='primary' onClick={setopencvRobotConfiguration}>
+          Configure opencv
+        </Button>
+        <Button variant='success' onClick={getStream}>
+          Start recording
+        </Button>
+      </div>
       <p className='App-intro'>{apiResponse}</p>
     </div>
   );

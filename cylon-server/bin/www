@@ -28,15 +28,15 @@ var io = require('socket.io')(server,{
 
 io.on("connection", socket => {
   console.log("New client connected"), setInterval(
-    () => getApiAndEmit(socket),
-    10000
+    () => getFrameAndEmit(socket),
+    10
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 })
 
-const getApiAndEmit= (socket)=>{
+const getFrameAndEmit= (socket)=>{
   try {
-    socket.emit("FromAPI", "frame", openrobot.im,);
+    socket.emit("frame", openrobot.frame);
   } catch (error) {
     console.error(`Error: ${error.code}`);
   }

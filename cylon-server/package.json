@@ -19,6 +19,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.7",
+    "opencv-build": "^0.1.9",
+    "opencv4nodejs-prebuilt": "^5.3.1",
     "socket.io": "^4.1.2"
   }
 }
