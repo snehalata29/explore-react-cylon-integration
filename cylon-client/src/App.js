@@ -2,10 +2,9 @@ import React, { useState, useEffect} from 'react';
 import { Button } from 'react-bootstrap';
 import socketIOClient from 'socket.io-client';
 import './App.css';
- const ENDPOINT = "http://127.0.0.1:9000"
+ const ENDPOINT = "http://127.0.0.1:9000";
  
 function App() {
-  // var socket = socketClient (SERVER);
   const [apiResponse, setApiResponse] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   useEffect(() => {
@@ -16,37 +15,9 @@ function App() {
       setImageUrl(url);
     });
   }, []);
-  
-  const setLEDConfiguration = () => {
-    fetch('http://localhost:9000/cylonRoute/setLedRobotConfiguration', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        // Change the port to the correct port for your Arduino.
-        connections: {
-          arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' },
-        },
-        devices: {
-          led: { driver: 'led', pin: 13 },
-        },
-      })
-    })
-      .then((res) => res.text())
-      .then((res) => setApiResponse(res));
-  };
-  const startLED = () => {
-    fetch('http://localhost:9000/cylonRoute/startLED')
-      .then((res) => res.text())
-      .then((res) => setApiResponse(res));
-  };
-  const stopLED = () => {
-    fetch('http://localhost:9000/cylonRoute/stopLED')
-      .then((res) => res.text())
-      .then((res) => setApiResponse(res));
-  };
+
+
+
   const setopencvRobotConfiguration = () => {
     fetch('http://localhost:9000/cylonRoute/setopencvRobotConfiguration')
       .then((res) => res.text())

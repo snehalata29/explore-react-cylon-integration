@@ -15,7 +15,7 @@ class OpenRobot {
 
   setInterval(() => {
     const frame = Vcap.read();
-      if(frame){
+      if(!frame.empty){
         const image = cv2.imencode('.jpg', frame).toString('base64');
         this.frame = image
       }   
